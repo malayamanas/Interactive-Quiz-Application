@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <script>
+        let timeLeft = 360; // 6 minutes in seconds
+        const timer = setInterval(function() {
+            timeLeft--;
+            document.getElementById("timer").innerHTML = `Time left: ${timeLeft} seconds`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                document.getElementById("quizForm").submit();
+            }
+        }, 1000);
+    </script>
+</head>
+<body>
+    <h1>Quiz</h1>
+    <div id="timer">Time left: 360 seconds</div>
+    <form id="quizForm" method="post">
+        {% csrf_token %}
+        {% for question in questions %}
+            <div>
+                <p>{{ question.text }}</p>
+                <input type="radio" name="question_{{ question.id }}" value="True"> True
+                <input type="radio" name="question_{{ question.id }}" value="False"> False
+            </div>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
