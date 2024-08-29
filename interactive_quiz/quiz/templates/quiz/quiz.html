@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
     <script>
-        let timeLeft = 360; // 6 minutes in seconds
+        let timeLeft = 30; // 30 seconds
         const timer = setInterval(function() {
             timeLeft--;
             document.getElementById("timer").innerHTML = `Time left: ${timeLeft} seconds`;
@@ -19,7 +19,7 @@
 </head>
 <body>
     <h1>Quiz</h1>
-    <div id="timer">Time left: 360 seconds</div>
+    <div id="timer">Time left: 30 seconds</div>
     <form id="quizForm" method="post">
         {% csrf_token %}
         {% for question in questions %}

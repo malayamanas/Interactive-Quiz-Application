@@ -1,3 +1,5 @@
+{% load quiz_extras %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +13,18 @@
     {% for question in questions %}
         <p>
             {{ question.text }}
-            {% if question.is_true == question.user_answer %}
-                ✔️
+            {% if user_answers|get_item:question.id == "True" %}
+                {% if question.is_true %}
+                    ✔️
+                {% else %}
+                    ❌
+                {% endif %}
+            {% elif user_answers|get_item:question.id == "False" %}
+                {% if not question.is_true %}
+                    ✔️
+                {% else %}
+                    ❌
+                {% endif %}
             {% else %}
                 ❌
             {% endif %}
