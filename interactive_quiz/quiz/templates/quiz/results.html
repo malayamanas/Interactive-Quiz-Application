@@ -15,10 +15,17 @@
             {{ question.text }}
             {% with user_answer=user_answers|get_item:question.id %}
                 <!-- Debugging Output -->
-                <br>User Answer: {{ user_answer.selected_answer }}
+                <br>User Answer: 
+                {% if user_answer.selected_answer is None %}
+                    None
+                {% else %}
+                    {{ user_answer.selected_answer }}
+                {% endif %}
                 <br>Correct Answer: {% if question.is_true %}True{% else %}False{% endif %}
                 
-                {% if user_answer.selected_answer == question.is_true %}
+                {% if user_answer.selected_answer is None %}
+                    ❓
+                {% elif user_answer.selected_answer == question.is_true %}
                     ✔️
                 {% else %}
                     ❌

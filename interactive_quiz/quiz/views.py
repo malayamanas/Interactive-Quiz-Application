@@ -58,9 +58,15 @@ def quiz_view(request):
 
         for question in questions:
             user_answer_str = selected_answers.get(f'question_{question.id}')
-            user_answer = user_answer_str == 'True'  # Convert the string to a boolean
+            
+            # Check if the question was left unanswered
+            if user_answer_str is None:
+                user_answer = None  # Treat it as unanswered
+            else:
+                user_answer = user_answer_str == 'True'  # Convert the string to a boolean
+            
             correct_answer = question.is_true
-            is_correct = correct_answer == user_answer
+            is_correct = (correct_answer == user_answer) if user_answer is not None else False
 
             # Save the user's answer to the database
             UserAnswer.objects.create(
@@ -86,6 +92,7 @@ def quiz_view(request):
     random.shuffle(questions)
 
     return render(request, 'quiz/quiz.html', {'questions': questions})
+
 
 
 @login_required
