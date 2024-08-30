@@ -31,5 +31,12 @@
         {% endfor %}
         <button type="submit">Submit</button>
     </form>
+    <hr>
+    <footer>
+        <div class="user-info">
+            <p>Logged in as: {{ user.username }}</p>
+            <a href="{% url 'quiz:logout' %}">Logout</a>
+        </div>
+    </footer>
 </body>
 </html>

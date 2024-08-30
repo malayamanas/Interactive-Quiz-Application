@@ -35,5 +35,12 @@
     {% endfor %}
 
     <p>Your score: {{ score_percentage }}%</p>
+        <hr>
+    <footer>
+        <div class="user-info">
+            <p>Logged in as: {{ user.username }}</p>
+            <a href="{% url 'quiz:logout' %}">Logout</a>
+        </div>
+    </footer>
 </body>
 </html>
