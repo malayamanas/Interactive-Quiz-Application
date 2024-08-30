@@ -1,15 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Question
+from .models import Question, UserAnswer, UserResult
 import random
 from django.urls import reverse
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-
-from django.contrib.auth import logout
-from django.shortcuts import redirect
 
 def logout_view(request):
     logout(request)
@@ -52,8 +48,6 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
-
-
 @login_required
 def quiz_view(request):
     if request.method == 'POST':
@@ -62,26 +56,28 @@ def quiz_view(request):
         questions = Question.objects.all()
         total_questions = questions.count()
 
-        user_answers = {}
-
         for question in questions:
-            user_answer = selected_answers.get(f'question_{question.id}')
-            user_answers[f'question_{question.id}'] = user_answer
+            user_answer_str = selected_answers.get(f'question_{question.id}')
+            user_answer = user_answer_str == 'True'  # Convert the string to a boolean
             correct_answer = question.is_true
+            is_correct = correct_answer == user_answer
 
-            # Debug print statements
-            print(f"Question ID: {question.id}")
-            print(f"User Answer: {user_answer}")
-            print(f"Correct Answer: {correct_answer}")
+            # Save the user's answer to the database
+            UserAnswer.objects.create(
+                user=request.user,
+                question=question,
+                selected_answer=user_answer,
+                is_correct=is_correct
+            )
 
-            if correct_answer == (user_answer == 'True'):
+            if is_correct:
                 score += 1
 
-        # Store the user answers in session
-        request.session['user_answers'] = user_answers
-
-        # Debug print statement
-        print(f"User Answers in Session: {request.session['user_answers']}")
+        # Save the user's result to the database
+        UserResult.objects.create(
+            user=request.user,
+            score=score
+        )
 
         # Redirect to the results page with the score and total_questions
         return redirect(reverse('quiz:results', kwargs={'score': score, 'total': total_questions}))
@@ -91,15 +87,16 @@ def quiz_view(request):
 
     return render(request, 'quiz/quiz.html', {'questions': questions})
 
+
+@login_required
 def results_view(request, score, total):
     questions = Question.objects.all()
-    user_answers = request.session.get('user_answers', {})
+    user_answers = {answer.question.id: answer for answer in UserAnswer.objects.filter(user=request.user)}
     score_percentage = round((score / total) * 100, 2)  # Round to 2 decimal places
 
-    # Debug print statements
-    print(f"User Answers from Session: {user_answers}")
-    for question in questions:
-        print(f"Question ID: {question.id}")
-        print(f"User Answer for Question ID {question.id}: {user_answers.get(f'question_{question.id}')}")
+    return render(request, 'quiz/results.html', {
+        'questions': questions,
+        'score_percentage': score_percentage,
+        'user_answers': user_answers
+    })
 
-    return render(request, 'quiz/results.html', {'questions': questions, 'score_percentage': score_percentage, 'user_answers': user_answers})
