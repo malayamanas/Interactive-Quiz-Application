@@ -5,23 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'registration/css/styles.css' %}">
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <a href="{% url 'quiz:register' %}">Register</a>
-
-<hr>
-<footer>
-    <div class="navigation">
-        <a href="{% url 'home' %}">Home</a>
+    <div class="login-page">
+        <div class="form">
+            <form method="POST" class="login-form">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+                <p class="message">Not registered? <a href="{% url 'quiz:register' %}">Create an account</a></p>
+            </form>
+        </div>
     </div>
-</footer>
-
 </body>
 </html>
