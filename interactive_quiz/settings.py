@@ -25,7 +25,10 @@ SECRET_KEY = "django-insecure-@ba-y1-8wb1_d6*qzaq32l@!px(f7^aiyp7#v=7!+&@c!q7ly0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'interactive-quiz-application-a270.onrender.com',
+]
+
 
 
 # Application definition
