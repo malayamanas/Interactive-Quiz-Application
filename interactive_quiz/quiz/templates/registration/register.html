@@ -12,13 +12,19 @@
         <div class="form">
             <form method="POST" class="register-form">
                 {% csrf_token %}
-                <input type="text" name="username" placeholder="Username" required>
+                {{ form.non_field_errors }}
+                {{ form.username.errors }}
+                <input type="text" name="username" placeholder="Username" value="{{ form.username.value }}" required>
+                {{ form.password1.errors }}
                 <input type="password" name="password1" placeholder="Password" required>
+                {{ form.password2.errors }}
                 <input type="password" name="password2" placeholder="Confirm Password" required>
+                {{ form.email.errors }}
                 <input type="email" name="email" placeholder="Email address" required>
                 <button type="submit">Create</button>
                 <p class="message">Already registered? <a href="{% url 'quiz:login' %}">Sign In</a></p>
             </form>
+            
         </div>
     </div>
 </body>
