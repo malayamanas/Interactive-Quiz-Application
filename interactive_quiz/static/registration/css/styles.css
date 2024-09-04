@@ -95,3 +95,22 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
+
+/* Back to Homepage button styling */
+.back-to-homepage {
+    background: lightpink;
+    color: #333;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-top: 1rem;
+    display: block;
+    text-align: center;
+  }
+  
+  .back-to-homepage:hover {
+    background: #ffb3b3; /* Slightly darker pink for hover effect */
+  }
+  
