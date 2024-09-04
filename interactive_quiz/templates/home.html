@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Solid Template</title>
+    {% load static %}
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'homepage/css/style.css' %}">
     <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
@@ -34,8 +35,8 @@
                             <h1 class="hero-title mt-0">Landing template for startups</h1>
                             <p class="hero-paragraph">Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.</p>
                             <div class="hero-cta">
-                                <a class="button button-primary" href="{% url 'login' %}">Login</a>
-                                <a class="button" href="{% url 'register' %}">Register</a>
+                                <a class="button button-primary" href="{% url 'quiz:login' %}">Login</a>
+                                <a class="button" href="{% url 'quiz:register' %}">Register</a>
                             </div>
                         </div>
                         <div class="hero-figure anime-element">
