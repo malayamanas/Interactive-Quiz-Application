@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'quiz/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ user.username }}!</h1>
+    </header>
+    <main>
+        <div class="button-container">
+            <a href="{% url 'quiz:start' %}" class="btn">Start Quiz</a>
+            <a href="{% url 'quiz:previous_results' %}" class="btn">View Previous Quiz Results</a>
+            <a href="{% url 'quiz:profile' %}" class="btn">View Profile</a>
+            <a href="{% url 'quiz:logout' %}" class="btn btn-logout">Logout</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Interactive Quiz Application</p>
+    </footer>
+</body>
+</html>

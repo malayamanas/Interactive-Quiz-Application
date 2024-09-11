@@ -15,4 +15,10 @@ urlpatterns = [
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+    # New paths for user actions
+    path('start/', views.quiz_start, name='start'),  # Start Quiz
+    path('previous-results/', views.previous_results_view, name='previous_results'),  # View Previous Results
+    path('profile/', views.view_profile, name='profile'),  # View Profile
+    path('userhome/', views.user_home, name='user_home'),  # User home URL
 ]

@@ -108,3 +108,32 @@ hr {
     border-top: 1px solid #ddd;
     margin: 20px 0;
 }
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.btn-logout {
+    background-color: #f44336;
+}
+
+.btn-logout:hover {
+    background-color: #e53935;
+}

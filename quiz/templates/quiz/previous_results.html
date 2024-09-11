@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Quiz Results</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'quiz/css/styles.css' %}">
+</head>
+<body>
+    <h1>Previous Quiz Results</h1>
+    
+    <div class="results-container">
+        {% if results %}
+            <ul>
+                {% for result in results %}
+                    <li>
+                        Quiz taken on: {{ result.completed_at|date:"F j, Y, g:i a" }} - Score: {{ result.score }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <p>Average Score: {{ average_score|default:"No results yet" }}</p>
+        {% else %}
+            <p>No previous results found.</p>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'quiz:user_home' %}" class="button">Back to User Home</a>
+
+    <footer>
+        <div class="user-info">
+            <p>Logged in as: {{ user.username }}</p>
+            <a href="{% url 'quiz:logout' %}">Logout</a>
+        </div>
+    </footer>
+</body>
+</html>

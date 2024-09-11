@@ -32,7 +32,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('quiz:quiz')  # Redirect to quiz page
+            return redirect('quiz:user_home')  # Redirect to userhome page
     else:
         form = AuthenticationForm()
     return render(request, 'registration/login.html', {'form': form})
@@ -43,7 +43,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('quiz:quiz')  # Redirect to quiz page
+            return redirect('quiz:user_home')  # Redirect to userhome page
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
@@ -107,3 +107,29 @@ def results_view(request, score, total):
         'user_answers': user_answers
     })
 
+@login_required
+def quiz_start(request):
+    # Logic to start a new quiz
+    return render(request, 'quiz/quiz.html')  # Modify as needed
+
+
+@login_required
+def view_profile(request):
+    # Logic to show user's profile
+    return render(request, 'quiz/profile.html')  # Modify as needed
+
+
+@login_required
+def user_home(request):
+    # Logic to show user's profile
+    return render(request, 'quiz/userhome.html')  # Modify as needed
+
+
+@login_required
+def previous_results_view(request):
+    results = UserResult.objects.filter(user=request.user).order_by('-completed_at')  # Fetch and sort results by date
+    average_score = results.aggregate(models.Avg('score'))['score__avg']  # Calculate average score
+    return render(request, 'quiz/previous_results.html', {
+        'results': results,
+        'average_score': average_score
+    })
