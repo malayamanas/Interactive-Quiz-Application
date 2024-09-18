@@ -5,22 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'registration/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'homepage/css/style.css' %}">
+    <style>
+        /* Center the form vertically and horizontally */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+        }
+        .form-wrapper {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #1d2026;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add spacing between form fields */
+        .form input {
+            margin-bottom: 16px; /* Adds space between input fields */
+        }
+
+        /* Center the button horizontally */
+        .form button {
+            display: block;      /* Makes the button take up full width of its parent by default */
+            margin: 0 auto;      /* Centers the button horizontally */
+            width: 100%;         /* Adjust width as per your need; you can reduce it if you want a smaller button */
+            max-width: 200px;    /* Limits button width to 200px max */
+        }
+
+        /* Center the message (Not registered? / Already registered?) */
+        .form .message {
+            text-align: center; /* Centers the message text */
+            margin-top: 16px;   /* Adds space above the message */
+        }
+
+        /* Center the Back to Homepage button */
+        .back-to-homepage {
+            display: block;
+            margin: 20px auto;   /* Centers the button horizontally and adds space above */
+            width: 100%;
+            max-width: 200px;    /* Adjust the width as necessary */
+        }
+
+        .button-secondary {
+            display: block;       /* Makes the button take the full available width */
+            margin: 20px auto;    /* Centers the button horizontally and adds space above */
+            width: 100%;          /* Makes the button responsive */
+            text-align: center;   /* Ensures text inside the button is centered */
+        }
+
+
+    </style>
 </head>
 <body>
-    <div class="login-page">
-        <div class="form">
-            <form method="POST" class="login-form">
+    <div class="container">
+        <div class="form-wrapper">
+            <form method="POST" class="form">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 {{ form.username.errors }}
-                <input type="text" name="username" placeholder="Username" value="{{ form.username.value }}" required>
+                <input type="text" name="username" class="input" placeholder="Username" value="{{ form.username.value }}" required>
                 {{ form.password.errors }}
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit">Login</button>
+                <input type="password" name="password" class="input" placeholder="Password" required>
+                <button type="submit" class="button button-primary">Login</button>
                 <p class="message">Not registered? <a href="{% url 'quiz:register' %}">Create an account</a></p>
             </form>
-            <button type="button" class="back-to-homepage" onclick="window.location.href='{% url 'home' %}'">Back to Homepage</button>
+            <button type="button" class="button button-secondary" onclick="window.location.href='{% url 'home' %}'">Back to Homepage</button>
         </div>
     </div>
 </body>

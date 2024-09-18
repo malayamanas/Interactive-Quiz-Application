@@ -5,7 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Home</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'quiz/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'homepage/css/style.css' %}">
+    <style>
+        /* Center everything vertically and horizontally */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            background-color: #1d2026; /* Matches background color */
+            text-align: center;
+            color: #8a94a7; /* Text color to match */
+        }
+
+        header h1 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px; /* Space between buttons */
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .button-container a {
+            display: block;
+            padding: 16px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #242830;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .button-container a:hover {
+            background-color: #3b404c;
+        }
+
+        .btn-logout {
+            background-color: #d9534f; /* Red color for logout */
+        }
+
+        footer {
+            margin-top: 20px;
+        }
+
+        footer p {
+            font-size: 14px;
+            color: #8a94a7;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,7 +69,7 @@
     <main>
         <div class="button-container">
             <a href="{% url 'quiz:quiz' %}" class="btn">Start Quiz</a>
-            <a href="{% url 'quiz:previous_results' %}" class="btn">View Previous Quiz Results</a>
+            <a href="{% url 'quiz:previous_results' %}" class="btn">Results History</a>
             <a href="{% url 'quiz:profile' %}" class="btn">View Profile</a>
             <a href="{% url 'quiz:logout' %}" class="btn btn-logout">Logout</a>
         </div>
