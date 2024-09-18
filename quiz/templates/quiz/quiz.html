@@ -5,41 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
     {% load static %}
-  
-    <!-- <script>
-        let timeLeft = 30; // 30 seconds
-        const timer = setInterval(function() {
-            timeLeft--;
-            document.getElementById("timer").innerHTML = `Time left: ${timeLeft} seconds`;
-
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                document.getElementById("quizForm").submit();
-            }
-        }, 1000);
-    </script> -->
+    <link rel="stylesheet" href="{% static 'homepage/css/style.css' %}">
 </head>
-<body>
-    <h1>Quiz</h1>
-    <div id="timer">Time left: 30 seconds (Frozen)</div>
-    <form id="quizForm" method="post">
-        {% csrf_token %}
-        {% for question in questions %}
-            <div>
-                <p>{{ question.text }}</p>
-                <input type="radio" name="question_{{ question.id }}" value="True"> True
-                <input type="radio" name="question_{{ question.id }}" value="False"> False
+<body class="body-wrap">
+    <div class="container text-center">
+        <h1>Quiz</h1>
+        <div id="timer" class="mt-16">Time left: 30 seconds (Frozen)</div>
+        
+        <form id="quizForm" method="post" class="mt-24">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div class="mb-16">
+                    <p>{{ question.text }}</p>
+                    <input type="radio" name="question_{{ question.id }}" value="True"> True
+                    <input type="radio" name="question_{{ question.id }}" value="False"> False
+                </div>
+            {% endfor %}
+            <button type="submit" class="button button-primary">Submit</button>
+        </form>
+
+        <footer class="mt-40">
+            <div class="user-info">
+                <p>Logged in as: {{ user.username }}</p>
+                <a href="{% url 'quiz:logout' %}" class="button-sm">Logout</a>
+                <a href="{% url 'quiz:user_home' %}" class="button button-primary">Back to User Home</a>
             </div>
-        {% endfor %}
-        <button type="submit">Submit</button>
-    </form>
-    <br>
-    <footer>
-        <div class="user-info">
-            <p>Logged in as: {{ user.username }}</p>
-            <a href="{% url 'quiz:logout' %}">Logout</a>
-            <a href="{% url 'quiz:user_home' %}" class="button">Back to User Home</a>
-        </div>
-    </footer>
+        </footer>
+    </div>
 </body>
 </html>

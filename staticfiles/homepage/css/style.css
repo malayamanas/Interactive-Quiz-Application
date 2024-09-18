@@ -6,6 +6,20 @@ html {
 body {
     margin: 0;
 }
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto; /* Ensures vertical scrolling when content overflows */
+}
+
+body-wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
 article,
 aside,
 footer,

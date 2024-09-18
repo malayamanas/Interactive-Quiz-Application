@@ -6,34 +6,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Previous Quiz Results</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'quiz/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'homepage/css/style.css' %}">
 </head>
-<body>
-    <h1>Previous Quiz Results</h1>
-    
-    <div class="results-container">
-        {% if results %}
-            <ul>
-                {% for result in results %}
-                    <li>
-                        Quiz taken on: {{ result.completed_at|date:"F j, Y, g:i a" }} - Score: {{ result.score }}
-                    </li>
-                {% endfor %}
-            </ul>
-            <p>Average Score: {{ average_score|default:"No results yet" }}</p>
-        {% else %}
-            <p>No previous results found.</p>
-        {% endif %}
-    </div>
-
-    <a href="{% url 'quiz:user_home' %}" class="button">Back to User Home</a>
-
-    <footer>
-        <div class="user-info">
-            <p>Logged in as: {{ user.username }}</p>
-            <a href="{% url 'quiz:logout' %}">Logout</a>
+<body class="body-wrap">
+    <div class="container text-center">
+        <h1>Previous Quiz Results</h1>
+        <div class="results-container">
+            {% if results %}
+                <ul class="list-reset">
+                    {% for result in results %}
+                        <li>
+                            Quiz taken on: {{ result.completed_at|date:"F j, Y, g:i a" }} - Score: {{ result.score }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <p>Average Score: {{ average_score|default:"No results yet" }}</p>
+            {% else %}
+                <p>No previous results found.</p>
+            {% endif %}
         </div>
-    </footer>
+
+        <a href="{% url 'quiz:user_home' %}" class="button button-primary mt-24">Back to User Home</a>
+
+        <footer class="mt-40">
+            <div class="user-info">
+                <p>Logged in as: {{ user.username }}</p>
+                <a href="{% url 'quiz:logout' %}" class="button-sm">Logout</a>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>

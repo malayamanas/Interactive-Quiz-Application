@@ -5,47 +5,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results</title>
-
+    <title>Quiz Results</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'homepage/css/style.css' %}">
 </head>
-<body>
-    <h1>Quiz Results</h1>
+<body class="body-wrap">
+    <div class="container text-center">
+        <h1>Quiz Results</h1>
 
-    <div class="results-container">
-        {% for question in questions %}
-            <p>
-                {{ question.text }}
-                {% with user_answer=user_answers|get_item:question.id %}
-                    <!-- Debugging Output -->
-                    <br>User Answer: 
-                    {% if user_answer.selected_answer is None %}
-                        None
-                    {% else %}
-                        {{ user_answer.selected_answer }}
-                    {% endif %}
-                    <br>Correct Answer: {% if question.is_true %}True{% else %}False{% endif %}
-                    
-                    {% if user_answer.selected_answer is None %}
-                        ❓
-                    {% elif user_answer.selected_answer == question.is_true %}
-                        ✔️
-                    {% else %}
-                        ❌
-                    {% endif %}
-                {% endwith %}
-            </p>
-        {% endfor %}
+        <div class="results-container mt-24">
+            {% for question in questions %}
+                <p>
+                    {{ question.text }}
+                    <br>
+                    {% with user_answer=user_answers|get_item:question.id %}
+                        <!-- Debugging Output -->
+                        <span>User Answer: </span>
+                        {% if user_answer.selected_answer is None %}
+                            <span>None</span>
+                        {% else %}
+                            <span>{{ user_answer.selected_answer }}</span>
+                        {% endif %}
+                        <br>
+                        <span>Correct Answer: </span>
+                        {% if question.is_true %}
+                            <span>True</span>
+                        {% else %}
+                            <span>False</span>
+                        {% endif %}
+                        <br>
+                        {% if user_answer.selected_answer is None %}
+                            <span>❓</span>
+                        {% elif user_answer.selected_answer == question.is_true %}
+                            <span>✔️</span>
+                        {% else %}
+                            <span>❌</span>
+                        {% endif %}
+                    {% endwith %}
+                </p>
+            {% endfor %}
 
-        <p>Your score: {{ score_percentage }}%</p>
-    </div>
-
-    <footer>
-        <div class="user-info">
-            <p>Logged in as: {{ user.username }}</p>
-            <a href="{% url 'quiz:logout' %}">Logout</a>
-            <a href="{% url 'quiz:user_home' %}" class="button">Back to User Home</a>
-            <a href="{% url 'quiz:previous_results' %}" class="btn">View Previous Quiz Results</a>
+            <p class="mt-24">Your score: {{ score_percentage }}%</p>
         </div>
-    </footer>
+
+        <footer class="mt-40">
+            <div class="user-info">
+                <p>Logged in as: {{ user.username }}</p>
+                <a href="{% url 'quiz:logout' %}" class="button-sm">Logout</a>
+                <a href="{% url 'quiz:user_home' %}" class="button button-primary">Back to User Home</a>
+                <a href="{% url 'quiz:previous_results' %}" class="button button-primary">View Previous Quiz Results</a>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
