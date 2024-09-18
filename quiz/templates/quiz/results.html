@@ -43,6 +43,8 @@
         <div class="user-info">
             <p>Logged in as: {{ user.username }}</p>
             <a href="{% url 'quiz:logout' %}">Logout</a>
+            <a href="{% url 'quiz:user_home' %}" class="button">Back to User Home</a>
+            <a href="{% url 'quiz:previous_results' %}" class="btn">View Previous Quiz Results</a>
         </div>
     </footer>
 </body>

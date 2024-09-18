@@ -6,7 +6,7 @@
     <title>Quiz</title>
     {% load static %}
   
-    <script>
+    <!-- <script>
         let timeLeft = 30; // 30 seconds
         const timer = setInterval(function() {
             timeLeft--;
@@ -17,11 +17,11 @@
                 document.getElementById("quizForm").submit();
             }
         }, 1000);
-    </script>
+    </script> -->
 </head>
 <body>
     <h1>Quiz</h1>
-    <div id="timer">Time left: 30 seconds</div>
+    <div id="timer">Time left: 30 seconds (Frozen)</div>
     <form id="quizForm" method="post">
         {% csrf_token %}
         {% for question in questions %}
@@ -38,6 +38,7 @@
         <div class="user-info">
             <p>Logged in as: {{ user.username }}</p>
             <a href="{% url 'quiz:logout' %}">Logout</a>
+            <a href="{% url 'quiz:user_home' %}" class="button">Back to User Home</a>
         </div>
     </footer>
 </body>

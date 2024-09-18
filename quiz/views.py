@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Question, UserAnswer, UserResult
 import random
 from django.urls import reverse
-
+from django.db import models
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -51,6 +51,7 @@ def register_view(request):
 @login_required
 def quiz_view(request):
     if request.method == 'POST':
+        # Handling POST request to score the quiz
         selected_answers = request.POST
         score = 0
         questions = Question.objects.all()
@@ -58,17 +59,10 @@ def quiz_view(request):
 
         for question in questions:
             user_answer_str = selected_answers.get(f'question_{question.id}')
-            
-            # Check if the question was left unanswered
-            if user_answer_str is None:
-                user_answer = None  # Treat it as unanswered
-            else:
-                user_answer = user_answer_str == 'True'  # Convert the string to a boolean
-            
+            user_answer = None if user_answer_str is None else user_answer_str == 'True'
             correct_answer = question.is_true
             is_correct = (correct_answer == user_answer) if user_answer is not None else False
 
-            # Save the user's answer to the database
             UserAnswer.objects.create(
                 user=request.user,
                 question=question,
@@ -79,20 +73,20 @@ def quiz_view(request):
             if is_correct:
                 score += 1
 
-        # Save the user's result to the database
         UserResult.objects.create(
             user=request.user,
             score=score
         )
 
-        # Redirect to the results page with the score and total_questions
         return redirect(reverse('quiz:results', kwargs={'score': score, 'total': total_questions}))
 
     questions = list(Question.objects.all())
     random.shuffle(questions)
 
-    return render(request, 'quiz/quiz.html', {'questions': questions})
+    # Debugging output
+    print("Questions:", questions)
 
+    return render(request, 'quiz/quiz.html', {'questions': questions})
 
 
 @login_required
