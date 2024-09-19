@@ -52,5 +52,4 @@ To set up and run the Interactive-Quiz-Application locally, follow these steps:
 - SQLite (Database)
 
 ## Credits
-- Landing Page Template (Home Page) from [cruip.com](https://cruip.com/demos/solid/)
-- Login and Register Pages Template from [codepen.io](https://codepen.io/colorlib/full/rxddKy/)
+- HTML/CSS/JS Template from [cruip.com](https://cruip.com/demos/solid/)
