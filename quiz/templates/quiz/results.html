@@ -14,39 +14,51 @@
         <h1>Quiz Results</h1>
 
         <div class="results-container mt-24">
-            {% for question in questions %}
-                <p>
-                    {{ question.text }}
+            <p>
+                {{ current_question.text }}
+                <br>
+                {% with user_answer=user_answers|get_item:current_question.id %}
+                    <span>User Answer: </span>
+                    {% if user_answer.selected_answer is None %}
+                        <span>None</span>
+                    {% else %}
+                        <span>{{ user_answer.selected_answer }}</span>
+                    {% endif %}
                     <br>
-                    {% with user_answer=user_answers|get_item:question.id %}
-                        <!-- Debugging Output -->
-                        <span>User Answer: </span>
-                        {% if user_answer.selected_answer is None %}
-                            <span>None</span>
-                        {% else %}
-                            <span>{{ user_answer.selected_answer }}</span>
-                        {% endif %}
-                        <br>
-                        <span>Correct Answer: </span>
-                        {% if question.is_true %}
-                            <span>True</span>
-                        {% else %}
-                            <span>False</span>
-                        {% endif %}
-                        <br>
-                        {% if user_answer.selected_answer is None %}
-                            <span>❓</span>
-                        {% elif user_answer.selected_answer == question.is_true %}
-                            <span>✔️</span>
-                        {% else %}
-                            <span>❌</span>
-                        {% endif %}
-                    {% endwith %}
-                </p>
-            {% endfor %}
+                    <span>Correct Answer: </span>
+                    {% if current_question.is_true %}
+                        <span>True</span>
+                    {% else %}
+                        <span>False</span>
+                    {% endif %}
+                    <br>
+                    {% if user_answer.selected_answer is None %}
+                        <span>😶</span>
+                    {% elif user_answer.selected_answer == current_question.is_true %}
+                        <span>😁</span>
+                    {% else %}
+                        <span>😭</span>
+                    {% endif %}
+                {% endwith %}
+            </p>
 
             <p class="mt-24">Your score: {{ score_percentage }}%</p>
         </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="navigation-buttons mt-16">
+                <!-- Show previous button if it's not the first result -->
+                {% if not is_first_result %}
+                    <button type="submit" name="previous" class="button button-secondary">Previous</button>
+                {% endif %}
+
+                <!-- Show next button if it's not the last result -->
+                {% if not is_last_result %}
+                    <button type="submit" name="next" class="button button-primary">Next</button>
+                {% endif %}
+            </div>
+        </form>
 
         <footer class="mt-40">
             <div class="user-info">
