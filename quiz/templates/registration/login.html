@@ -64,7 +64,7 @@
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 {{ form.username.errors }}
-                <input type="text" name="username" class="input" placeholder="Username" value="{{ form.username.value }}" required>
+                <input type="text" name="username" class="input" placeholder="Username" required>
                 {{ form.password.errors }}
                 <input type="password" name="password" class="input" placeholder="Password" required>
                 <button type="submit" class="button button-primary">Login</button>
