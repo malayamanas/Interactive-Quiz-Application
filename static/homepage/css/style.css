@@ -19,6 +19,54 @@ body-wrap {
     min-height: 100vh;
 }
 
+/* Center the form vertically and horizontally */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+.form-wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #1d2026;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add spacing between form fields */
+.form input {
+    margin-bottom: 16px; /* Adds space between input fields */
+}
+
+/* Center the button horizontally */
+.form button {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 200px; /* Limits button width to 200px max */
+}
+
+/* Center the message */
+.form .message {
+    text-align: center;
+    margin-top: 16px;
+}
+
+/* Center the Back to Homepage button */
+.back-to-homepage {
+    display: block;
+    margin: auto;
+    width: 100%;
+    max-width: 200px;
+}
+
+/* Center and style the Reset Password link */
+.reset-password {
+    text-align: center;
+    margin-top: 12px;
+}
 
 article,
 aside,

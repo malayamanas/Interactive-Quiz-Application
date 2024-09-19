@@ -32,7 +32,7 @@
         .form button {
             display: block;      /* Makes the button take up full width of its parent by default */
             margin: 0 auto;      /* Centers the button horizontally */
-            width: 100%;         /* Adjust width as per your need; you can reduce it if you want a smaller button */
+            width: 100%;         
             max-width: 200px;    /* Limits button width to 200px max */
         }
 
@@ -67,7 +67,7 @@
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 {{ form.username.errors }}
-                <input type="text" name="username" class="input" placeholder="Username" value="{{ form.username.value }}" required>
+                <input type="text" name="username" class="input" placeholder="Username" required>
                 {{ form.password1.errors }}
                 <input type="password" name="password1" class="input" placeholder="Password" required>
                 {{ form.password2.errors }}
