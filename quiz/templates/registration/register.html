@@ -88,15 +88,19 @@
                                             {{ form.non_field_errors }}
                                             {{ form.username.errors }}
                                             <input type="text" name="username" class="input" placeholder="Username" required>
+                                            {{ form.first_name.errors }}
+                                            <input type="text" name="first_name" class="input" placeholder="First Name" required>
+                                            {{ form.last_name.errors }}
+                                            <input type="text" name="last_name" class="input" placeholder="Last Name" required>
+                                            {{ form.email.errors }}
+                                            <input type="email" name="email" class="input" placeholder="Email address" required>
                                             {{ form.password1.errors }}
                                             <input type="password" name="password1" class="input" placeholder="Password" required>
                                             {{ form.password2.errors }}
                                             <input type="password" name="password2" class="input" placeholder="Confirm Password" required>
-                                            {{ form.email.errors }}
-                                            <input type="email" name="email" class="input" placeholder="Email address" required>
                                             <button type="submit" class="button button-primary">Create</button>
                                             <p class="message">Already registered? <a href="{% url 'quiz:login' %}">Sign In</a></p>
-                                        </form>
+                                        </form>                                        
                                         <button type="button" class="button button-secondary" onclick="window.location.href='{% url 'home' %}'">Back to Homepage</button>
                                     </div>
                                 </div>
