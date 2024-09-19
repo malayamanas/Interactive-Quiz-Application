@@ -10,19 +10,35 @@
 <body class="body-wrap">
     <div class="container text-center">
         <h1>Quiz</h1>
+
+        <!-- Timer -->
         <div id="timer" class="mt-16">Time left: 30 seconds (Frozen)</div>
-        
+
+        <!-- Display one question at a time -->
         <form id="quizForm" method="post" class="mt-24">
             {% csrf_token %}
-            {% for question in questions %}
-                <div class="mb-16">
-                    <p>{{ question.text }}</p>
-                    <input type="radio" name="question_{{ question.id }}" value="True"> True
-                    <input type="radio" name="question_{{ question.id }}" value="False"> False
-                </div>
-            {% endfor %}
-            <button type="submit" class="button button-primary">Submit</button>
+            <input type="hidden" name="question_id" value="{{ current_question.id }}">
+            
+            <div class="mb-16">
+                <p>{{ current_question.text }}</p>
+                <input type="radio" name="question_{{ current_question.id }}" value="True"> True
+                <input type="radio" name="question_{{ current_question.id }}" value="False"> False
+            </div>
+        
+            <!-- Navigation buttons -->
+            <div class="button-container">
+                {% if current_question_index > 0 %}
+                    <button type="submit" name="previous" class="button button-secondary">Previous</button>
+                {% endif %}
+        
+                {% if not is_last_question %}
+                    <button type="submit" name="next" class="button button-primary">Next</button>
+                {% else %}
+                    <button type="submit" name="submit" class="button button-primary">Submit</button>
+                {% endif %}
+            </div>
         </form>
+        
 
         <footer class="mt-40">
             <div class="user-info">

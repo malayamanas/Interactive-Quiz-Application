@@ -50,43 +50,60 @@ def register_view(request):
 
 @login_required
 def quiz_view(request):
+    # Fetch all questions in the quiz
+    questions = list(Question.objects.all())
+    total_questions = len(questions)
+
+    # Initialize or get the current question index from session
+    if 'current_question_index' not in request.session or request.method == 'GET':
+        request.session['current_question_index'] = 0
+
+    current_question_index = request.session['current_question_index']
+
     if request.method == 'POST':
-        # Handling POST request to score the quiz
-        selected_answers = request.POST
-        score = 0
-        questions = Question.objects.all()
-        total_questions = questions.count()
+        # Handle the answer submission
+        question_id = request.POST.get('question_id')
+        answer = request.POST.get(f'question_{question_id}')
 
-        for question in questions:
-            user_answer_str = selected_answers.get(f'question_{question.id}')
-            user_answer = None if user_answer_str is None else user_answer_str == 'True'
-            correct_answer = question.is_true
-            is_correct = (correct_answer == user_answer) if user_answer is not None else False
-
+        if answer is not None:
+            question = Question.objects.get(id=question_id)
+            is_correct = (answer == 'True') == question.is_true
             UserAnswer.objects.create(
                 user=request.user,
                 question=question,
-                selected_answer=user_answer,
+                selected_answer=(answer == 'True'),
                 is_correct=is_correct
             )
 
-            if is_correct:
-                score += 1
+        # Move to the next question or submit quiz
+        if 'next' in request.POST:
+            current_question_index += 1
+        elif 'previous' in request.POST and current_question_index > 0:
+            current_question_index -= 1
+        elif 'submit' in request.POST or current_question_index >= total_questions - 1:
+            # On submit, finalize the quiz and redirect to results page
+            score = UserAnswer.objects.filter(user=request.user, is_correct=True).count()
+            UserResult.objects.create(user=request.user, score=score)
 
-        UserResult.objects.create(
-            user=request.user,
-            score=score
-        )
+            # Reset the session data for a fresh start on the next quiz
+            del request.session['current_question_index']
 
-        return redirect(reverse('quiz:results', kwargs={'score': score, 'total': total_questions}))
+            return redirect(reverse('quiz:results', kwargs={'score': score, 'total': total_questions}))
 
-    questions = list(Question.objects.all())
-    random.shuffle(questions)
+        # Update the current question index in session
+        request.session['current_question_index'] = current_question_index
 
-    # Debugging output
-    print("Questions:", questions)
+    # Fetch the current question to display
+    current_question = questions[current_question_index]
+    is_last_question = current_question_index == total_questions - 1
 
-    return render(request, 'quiz/quiz.html', {'questions': questions})
+    return render(request, 'quiz/quiz.html', {
+        'current_question': current_question,
+        'current_question_index': current_question_index,
+        'total_questions': total_questions,
+        'is_last_question': is_last_question
+    })
+
 
 
 @login_required
