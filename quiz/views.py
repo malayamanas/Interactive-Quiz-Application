@@ -58,6 +58,9 @@ def quiz_view(request):
     if 'current_question_index' not in request.session or request.method == 'GET':
         request.session['current_question_index'] = 0
 
+        # Clear previous answers when starting a new quiz
+        UserAnswer.objects.filter(user=request.user).delete()
+
     current_question_index = request.session['current_question_index']
 
     if request.method == 'POST':
@@ -110,13 +113,16 @@ def quiz_view(request):
 def results_view(request, score, total):
     questions = Question.objects.all()
     user_answers = {answer.question.id: answer for answer in UserAnswer.objects.filter(user=request.user)}
-    score_percentage = round((score / total) * 100, 2)  # Round to 2 decimal places
+    
+    # Calculate the percentage based on correct answers
+    score_percentage = round((score / total) * 100, 2)  # This ensures the percentage is between 0 and 100
 
     return render(request, 'quiz/results.html', {
         'questions': questions,
         'score_percentage': score_percentage,
         'user_answers': user_answers
     })
+
 
 @login_required
 def quiz_start(request):
