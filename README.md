@@ -1,6 +1,13 @@
 # Interactive-Quiz-Application
 
+![image](https://github.com/user-attachments/assets/95d1ba66-c0c7-4995-a7eb-380ecfc442bc)
+
+
 This is an interactive quiz application built using Django. The application allows users to register, log in, and take quizzes. It features a responsive design and includes a homepage, login, registration, quiz, and results pages.
+
+![GitHub repo size](https://img.shields.io/github/repo-size/senhorvance/Interactive-Quiz-Application)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/senhorvance/Interactive-Quiz-Application)
+![GitHub Release](https://img.shields.io/github/v/release/senhorvance/Interactive-Quiz-Application)
 
 ## Features
 
