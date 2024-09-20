@@ -45,10 +45,13 @@
                         {% else %}
                             <p>No previous results found.</p>
                         {% endif %}
+                        
                     </div>
+                    
             </section>
+            
         </main>
-    
+        <a href="{% url 'quiz:user_home' %}" class="button button-primary">Back to Home</a>
         <footer class="site-footer">
             <div class="container">
                 <div class="site-footer-inner">
