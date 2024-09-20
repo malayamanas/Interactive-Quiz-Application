@@ -52,20 +52,46 @@ def register_view(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+from django.utils import timezone
+from datetime import datetime, timezone as dt_timezone  # Import Python's timezone
+
 @login_required
 def quiz_view(request):
     # Fetch all questions in the quiz
     questions = list(Question.objects.all())
     total_questions = len(questions)
+    time_limit = 30  # Time limit in seconds
 
     # Initialize or get the current question index from session
     if 'current_question_index' not in request.session or request.method == 'GET':
         request.session['current_question_index'] = 0
 
+        # Set the start time for the quiz when the user begins
+        if 'quiz_start_time' not in request.session:
+            request.session['quiz_start_time'] = timezone.now().isoformat()
+
         # Clear previous answers when starting a new quiz
         UserAnswer.objects.filter(user=request.user).delete()
 
     current_question_index = request.session['current_question_index']
+
+    # Parse the quiz start time from the session
+    quiz_start_time_str = request.session['quiz_start_time']
+    quiz_start_time = datetime.fromisoformat(quiz_start_time_str).replace(tzinfo=dt_timezone.utc)  # Use Python's timezone
+
+    # Calculate the elapsed time
+    elapsed_time = (timezone.now() - quiz_start_time).total_seconds()
+
+    # If time limit is exceeded, auto-submit the quiz
+    if elapsed_time > time_limit:
+        score = UserAnswer.objects.filter(user=request.user, is_correct=True).count()
+        UserResult.objects.create(user=request.user, score=score)
+
+        # Reset session data for a fresh start on the next quiz
+        del request.session['current_question_index']
+        del request.session['quiz_start_time']  # Clear the timer
+
+        return redirect(reverse('quiz:results', kwargs={'score': score, 'total': total_questions}))
 
     if request.method == 'POST':
         # Handle the answer submission
@@ -94,6 +120,7 @@ def quiz_view(request):
 
             # Reset the session data for a fresh start on the next quiz
             del request.session['current_question_index']
+            del request.session['quiz_start_time']  # Clear the timer
 
             return redirect(reverse('quiz:results', kwargs={'score': score, 'total': total_questions}))
 
@@ -108,7 +135,8 @@ def quiz_view(request):
         'current_question': current_question,
         'current_question_index': current_question_index,
         'total_questions': total_questions,
-        'is_last_question': is_last_question
+        'is_last_question': is_last_question,
+        'time_left': max(0, time_limit - int(elapsed_time))  # Send remaining time to template
     })
 
 
