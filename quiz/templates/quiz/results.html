@@ -74,7 +74,7 @@
                                 <p><img src="{{ current_question.image.url }}" alt="Question Image"></p>
                             {% endif %}
                             <p><strong>Your Answer:</strong> {{ selected_option }}</p>
-                            <p><strong>Correct Answer:</strong> {{ correct_answer }}</p>
+                            <p><strong>Correct Answer:</strong> {{ correct_option }}</p>
                             <div class="button-container">
                                 {% if not is_first_result %}
                                     <a href="#" class="btn" onclick="document.getElementById('previous-form').submit();">Previous</a>
