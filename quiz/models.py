@@ -5,12 +5,12 @@ import random
 
 class Question(models.Model):
     text = models.CharField(max_length=255)
-    option_a = models.CharField(max_length=255)
-    option_b = models.CharField(max_length=255)
-    option_c = models.CharField(max_length=255)
-    option_d = models.CharField(max_length=255)
+    option_a = models.CharField(max_length=255, default="N/A")
+    option_b = models.CharField(max_length=255, default="N/A")
+    option_c = models.CharField(max_length=255, default="N/A")
+    option_d = models.CharField(max_length=255, default="N/A")
     correct_option = models.CharField(max_length=1, choices=[('a', 'A'), ('b', 'B'), ('c', 'C'), ('d', 'D')])
-    image = models.ImageField(upload_to='question_images/', null=True, blank=True)  # New field for image
+    image = models.ImageField(upload_to='question_images/', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.correct_option:
