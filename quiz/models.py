@@ -9,7 +9,7 @@ class Question(models.Model):
     option_b = models.CharField(max_length=255, default="N/A")
     option_c = models.CharField(max_length=255, default="N/A")
     option_d = models.CharField(max_length=255, default="N/A")
-    correct_option = models.CharField(max_length=1, choices=[('a', 'A'), ('b', 'B'), ('c', 'C'), ('d', 'D')])
+    correct_option = models.CharField(max_length=1, choices=[('a', 'A'), ('b', 'B'), ('c', 'C'), ('d', 'D')], null=True, blank=True)
     image = models.ImageField(upload_to='question_images/', null=True, blank=True)
 
     def save(self, *args, **kwargs):
