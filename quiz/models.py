@@ -10,6 +10,7 @@ class Question(models.Model):
     option_c = models.CharField(max_length=255)
     option_d = models.CharField(max_length=255)
     correct_option = models.CharField(max_length=1, choices=[('a', 'A'), ('b', 'B'), ('c', 'C'), ('d', 'D')])
+    image = models.ImageField(upload_to='question_images/', null=True, blank=True)  # New field for image
 
     def save(self, *args, **kwargs):
         if not self.correct_option:
