@@ -1,7 +1,6 @@
 # quiz/models.py
 from django.db import models
 from django.contrib.auth.models import User
-import random
 
 class Question(models.Model):
     text = models.CharField(max_length=255)
@@ -11,11 +10,6 @@ class Question(models.Model):
     option_d = models.CharField(max_length=255, default="N/A")
     correct_option = models.CharField(max_length=1, choices=[('a', 'A'), ('b', 'B'), ('c', 'C'), ('d', 'D')], null=True, blank=True)
     image = models.ImageField(upload_to='question_images/', null=True, blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.correct_option:
-            self.correct_option = random.choice(['a', 'b', 'c', 'd'])
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.text
