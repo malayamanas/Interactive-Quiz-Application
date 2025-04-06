@@ -164,6 +164,10 @@ def results_view(request, score, total):
     # Fetch the current question and user answers
     current_question = questions[current_result_index]
     user_answers = {answer.question.id: answer for answer in UserAnswer.objects.filter(user=request.user)}
+
+    # Get the user's selected answer for the current question
+    selected_answer = user_answers.get(current_question.id)
+    selected_option = selected_answer.selected_option if selected_answer else "None"
     
     # Calculate the percentage based on correct answers
     score_percentage = round((score / total) * 100, 2)
@@ -178,6 +182,7 @@ def results_view(request, score, total):
         'total_questions': total_questions,
         'score_percentage': score_percentage,
         'user_answers': user_answers,
+        'selected_option': selected_option,
         'is_last_result': is_last_result,
         'is_first_result': is_first_result
     })
