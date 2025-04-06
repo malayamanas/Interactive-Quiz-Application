@@ -104,7 +104,7 @@ def quiz_view(request):
             UserAnswer.objects.create(
                 user=request.user,
                 question=question,
-                selected_answer=answer,
+                selected_option=answer,  # Use the correct field name here
                 is_correct=is_correct
             )
 
@@ -137,51 +137,6 @@ def quiz_view(request):
         'total_questions': total_questions,
         'is_last_question': is_last_question,
         'time_left': max(0, time_limit - int(elapsed_time))  # Send remaining time to template
-    })
-
-
-
-@login_required
-def results_view(request, score, total):
-    # Fetch all questions
-    questions = list(Question.objects.all())
-    total_questions = len(questions)
-
-    # Initialize or get the current result index from session
-    if 'current_result_index' not in request.session or request.method == 'GET':
-        request.session['current_result_index'] = 0
-
-    current_result_index = request.session['current_result_index']
-
-    if request.method == 'POST':
-        # Navigate through results with "next" and "previous" buttons
-        if 'next' in request.POST:
-            current_result_index += 1
-        elif 'previous' in request.POST and current_result_index > 0:
-            current_result_index -= 1
-
-        # Update the current result index in session
-        request.session['current_result_index'] = current_result_index
-
-    # Fetch the current question and user answers
-    current_question = questions[current_result_index]
-    user_answers = {answer.question.id: answer for answer in UserAnswer.objects.filter(user=request.user)}
-    
-    # Calculate the percentage based on correct answers
-    score_percentage = round((score / total) * 100, 2)
-
-    # Determine if it's the last or first question
-    is_last_result = current_result_index == total_questions - 1
-    is_first_result = current_result_index == 0
-
-    return render(request, 'quiz/results.html', {
-        'current_question': current_question,
-        'current_result_index': current_result_index,
-        'total_questions': total_questions,
-        'score_percentage': score_percentage,
-        'user_answers': user_answers,
-        'is_last_result': is_last_result,
-        'is_first_result': is_first_result
     })
 
 
