@@ -12,36 +12,72 @@
     <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
 </head>
 <body>
-    <h1>Quiz Results</h1>
-    
-    <div>
-        <p><strong>Question:</strong> {{ current_question.text }}</p>
-        {% if current_question.image %}
-            <img src="{{ current_question.image.url }}" alt="Question Image" style="max-width: 100%; height: auto;">
-        {% endif %}
-        <p><strong>User Answer:</strong> {{ selected_option }}</p>
-        <p><strong>Correct Answer:</strong> {{ current_question.correct_option }}</p>
-    </div>
-    
-    <div>
-        <p>Your score: {{ score_percentage }}%</p>
-        {% if is_first_result %}
-            <button type="button" disabled>Previous</button>
-        {% else %}
-            <form method="post">
-                {% csrf_token %}
-                <button type="submit" name="previous">Previous</button>
-            </form>
-        {% endif %}
-        
-        {% if is_last_result %}
-            <button type="button" disabled>Next</button>
-        {% else %}
-            <form method="post">
-                {% csrf_token %}
-                <button type="submit" name="next">Next</button>
-            </form>
-        {% endif %}
+    <div class="body-wrap">
+        <header class="site-header">
+            <div class="container">
+                <div class="site-header-inner">
+                    <div class="brand header-brand">
+                        <h1 class="m-0">
+                            <a href="#">
+                                <img class="header-logo-image" src="{% static 'homepage/images/logo.svg' %}" alt="Logo">
+                            </a>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-inner">
+                        <div class="hero-copy">
+                            <h1>Quiz Results</h1>
+                            <div>
+                                <p><strong>Question:</strong> {{ current_question.text }}</p>
+                                {% if current_question.image %}
+                                    <img src="{{ current_question.image.url }}" alt="Question Image" style="max-width: 100%; height: auto;">
+                                {% endif %}
+                                <p><strong>User Answer:</strong> {{ selected_option }}</p>
+                                <p><strong>Correct Answer:</strong> {{ current_question.correct_option }}</p>
+                            </div>
+                            <div>
+                                <p>Your score: {{ score_percentage }}%</p>
+                                {% if is_first_result %}
+                                    <button type="button" disabled>Previous</button>
+                                {% else %}
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" name="previous">Previous</button>
+                                    </form>
+                                {% endif %}
+                                
+                                {% if is_last_result %}
+                                    <button type="button" disabled>Next</button>
+                                {% else %}
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" name="next">Next</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="hero-figure anime-element">
+                            <svg class="placeholder" width="528" height="396" viewBox="0 0 528 396">
+                                <rect width="528" height="396" style="fill:transparent;" />
+                            </svg>
+                            <div class="hero-figure-box hero-figure-box-01" data-rotation="45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-02" data-rotation="-45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-03" data-rotation="0deg"></div>
+                            <div class="hero-figure-box hero-figure-box-04" data-rotation="-135deg"></div>
+                            <div class="hero-figure-box hero-figure-box-05"></div>
+                            <div class="hero-figure-box hero-figure-box-06"></div>
+                            <div class="hero-figure-box hero-figure-box-07"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 </body>
 </html>
