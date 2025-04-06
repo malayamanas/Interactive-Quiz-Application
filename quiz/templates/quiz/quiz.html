@@ -42,8 +42,10 @@
                                     {% if current_question.image %}
                                         <img src="{{ current_question.image.url }}" alt="Question Image" style="max-width: 100%; height: auto;">
                                     {% endif %}
-                                    <input type="radio" name="question_{{ current_question.id }}" value="True"> True
-                                    <input type="radio" name="question_{{ current_question.id }}" value="False"> False
+                                    <input type="radio" name="question_{{ current_question.id }}" value="a"> {{ current_question.option_a }}<br>
+                                    <input type="radio" name="question_{{ current_question.id }}" value="b"> {{ current_question.option_b }}<br>
+                                    <input type="radio" name="question_{{ current_question.id }}" value="c"> {{ current_question.option_c }}<br>
+                                    <input type="radio" name="question_{{ current_question.id }}" value="d"> {{ current_question.option_d }}<br>
                                 </div>
                             
                                 <!-- Navigation buttons -->

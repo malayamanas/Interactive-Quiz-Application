@@ -7,7 +7,7 @@ from .models import Question
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['text', 'is_true', 'image']  # Include the new image field
+        fields = ['text', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_option', 'image']
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
