@@ -1,4 +1,3 @@
-<!-- quiz/templates/quiz/results.html -->
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -71,7 +70,11 @@
                             <p>Score: {{ score_percentage }}%</p>
                             <p>Question {{ current_result_index|add:1 }} of {{ total_questions }}</p>
                             <p><strong>Question:</strong> {{ current_question.text }}</p>
+                            {% if current_question.image %}
+                                <p><img src="{{ current_question.image.url }}" alt="Question Image"></p>
+                            {% endif %}
                             <p><strong>Your Answer:</strong> {{ selected_option }}</p>
+                            <p><strong>Correct Answer:</strong> {{ correct_answer }}</p>
                             <div class="button-container">
                                 {% if not is_first_result %}
                                     <a href="#" class="btn" onclick="document.getElementById('previous-form').submit();">Previous</a>
