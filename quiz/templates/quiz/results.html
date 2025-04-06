@@ -69,7 +69,7 @@
                         <div class="hero-copy">
                             <h2>Your Quiz Results</h2>
                             <p>Score: {{ score_percentage }}%</p>
-                            <p>Question {{ current_result_index + 1 }} of {{ total_questions }}</p>
+                            <p>Question {{ current_result_index|add:1 }} of {{ total_questions }}</p>
                             <p><strong>Question:</strong> {{ current_question.text }}</p>
                             <p><strong>Your Answer:</strong> {{ selected_option }}</p>
                             <div class="button-container">
