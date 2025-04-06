@@ -89,9 +89,9 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="footer-links list-reset">
+                    {% if user.is_authenticated %}
                         <a href="{% url 'quiz:logout' %}" class="btn btn-logout">Logout</a>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </footer>
