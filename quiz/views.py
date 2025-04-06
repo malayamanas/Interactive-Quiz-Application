@@ -77,7 +77,7 @@ def quiz_view(request):
 
     # Parse the quiz start time from the session
     quiz_start_time_str = request.session['quiz_start_time']
-    quiz_start_time = datetime.fromisoformat(quiz_start_time_str).replace(tzinfo=dt_timezone.utc)  # Use Python's timezone
+    quiz_start_time = datetime.fromisoformat(quiz_start_time_str).replace(tzinfo=dt_timezone.utc)
 
     # Calculate the elapsed time
     elapsed_time = (timezone.now() - quiz_start_time).total_seconds()
@@ -89,7 +89,7 @@ def quiz_view(request):
 
         # Reset session data for a fresh start on the next quiz
         del request.session['current_question_index']
-        del request.session['quiz_start_time']  # Clear the timer
+        del request.session['quiz_start_time']
 
         return redirect(reverse('quiz:results', kwargs={'score': score, 'total': total_questions}))
 
@@ -100,11 +100,11 @@ def quiz_view(request):
 
         if answer is not None:
             question = Question.objects.get(id=question_id)
-            is_correct = (answer == 'True') == question.is_true
+            is_correct = (answer == question.correct_option)
             UserAnswer.objects.create(
                 user=request.user,
                 question=question,
-                selected_answer=(answer == 'True'),
+                selected_answer=answer,
                 is_correct=is_correct
             )
 
@@ -120,7 +120,7 @@ def quiz_view(request):
 
             # Reset the session data for a fresh start on the next quiz
             del request.session['current_question_index']
-            del request.session['quiz_start_time']  # Clear the timer
+            del request.session['quiz_start_time']
 
             return redirect(reverse('quiz:results', kwargs={'score': score, 'total': total_questions}))
 
